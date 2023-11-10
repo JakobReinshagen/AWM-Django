@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#GDAL_LIBRARY_PATH= r"C:\Users\jakob\Downloads\OSGeo4W\bin\gdal307.dll"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'geoDjango.apps.GeodjangoConfig',
+    'geoDjango',
     'userLocation.apps.UserlocationConfig',
     'leaflet',
     'crispy_forms',
@@ -91,6 +92,34 @@ DATABASES = {
         'PORT': 25432
     }
 }
+
+import socket
+
+STATIC_ROOT = BASE_DIR / "static"
+STATIC_URL = "/static/"
+
+if socket.gethostname() == "jakob":
+    DATABASES["default"]["HOST"] = "localhost"
+    DATABASES["default"]["PORT"] = 25432
+else:
+    DATABASES["default"]["HOST"] = "wmap-postgis"
+    DATABASES["default"]["PORT"] = 5432
+
+# Set DEPLOY_SECURE to True only for LIVE deployment
+DEPLOY_SECURE = True
+if DEPLOY_SECURE:
+    DEBUG = False
+    TEMPLATES[0]["OPTIONS"]["debug"] = False
+    ALLOWED_HOSTS = ['jakobreinshagen.site', 'localhost', ]
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+else:
+    DEBUG = True
+    TEMPLATES[0]["OPTIONS"]["debug"] = True
+    ALLOWED_HOSTS = ['*', ]
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+
 
 
 # Password validation

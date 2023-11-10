@@ -23,6 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path("updatedb/", views.update_location, name="updatedb"),
-    #path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
     path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
 ]

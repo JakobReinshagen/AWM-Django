@@ -15,7 +15,7 @@ class WorldBorder(models.Model):
     region = models.IntegerField('Region Code')
     subregion = models.IntegerField('Sub-Region Code')
     lon = models.FloatField()
-    lat = models.FloatField()
+    #lat = models.FloatField()
     # GeoDjango-specific: a geometry field (MultiPolygonField)
     mpoly = models.MultiPolygonField(srid=4326)
     # Returns the string representation of the model.
