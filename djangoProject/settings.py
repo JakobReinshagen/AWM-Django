@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#GDAL_LIBRARY_PATH= r"C:\Users\jakob\Downloads\OSGeo4W\bin\gdal307.dll"
+GDAL_LIBRARY_PATH= r"C:\Users\jakob\Downloads\OSGeo4W\bin\gdal307.dll"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'userLocation.apps.UserlocationConfig',
     'leaflet',
     'crispy_forms',
+    'location',
+    'pwa',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -104,9 +107,11 @@ if socket.gethostname() == "jakob":
 else:
     DATABASES["default"]["HOST"] = "wmap-postgis"
     DATABASES["default"]["PORT"] = 5432
+    DATABASES["default"]["HOST"] = "localhost"
+    DATABASES["default"]["PORT"] = 25432
 
 # Set DEPLOY_SECURE to True only for LIVE deployment
-DEPLOY_SECURE = True
+DEPLOY_SECURE = False
 if DEPLOY_SECURE:
     DEBUG = False
     TEMPLATES[0]["OPTIONS"]["debug"] = False

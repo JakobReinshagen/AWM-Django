@@ -24,4 +24,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("updatedb/", views.update_location, name="updatedb"),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
+    #path('', include('posts.urls')),
+    path('', include('pwa.urls')),
+    path("api/v1/", include('location.urls')),
 ]
