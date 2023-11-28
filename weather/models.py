@@ -1,0 +1,41 @@
+from django.contrib.gis.db import models
+
+
+class Counties(models.Model):
+    osm_id = models.FloatField()
+    name_tag = models.CharField(max_length=255)
+    name_ga = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+    alt_name = models.CharField(max_length=255)
+    alt_name_g = models.CharField(max_length=255)
+    logainm_re = models.CharField(max_length=255)
+    osm_user = models.CharField(max_length=100)
+    osm_timest = models.CharField(max_length=38)
+    attributio = models.CharField(max_length=255)
+    t_ie_url = models.CharField(max_length=35)
+    area = models.FloatField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    epoch_tstm = models.FloatField()
+    geom = models.MultiPolygonField(srid=4326)
+
+
+class Eds(models.Model):
+    osm_id = models.FloatField()
+    name_tag = models.CharField(max_length=255)
+    name_ga = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255)
+    alt_name = models.CharField(max_length=255)
+    alt_name_g = models.CharField(max_length=255)
+    osm_user = models.CharField(max_length=100)
+    osm_timest = models.CharField(max_length=38)
+    attributio = models.CharField(max_length=255)
+    logainm_re = models.CharField(max_length=255)
+    co_name = models.CharField(max_length=255)
+    co_osm_id = models.FloatField()
+    t_ie_url = models.CharField(max_length=65)
+    area = models.FloatField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    epoch_tstm = models.FloatField()
+    geom = models.MultiPolygonField(srid=4326)

@@ -16,15 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
+from rest_framework import routers, serializers, viewsets
+from userLocation import views as userLocationViews
+from restAPI import views as restApiViews
+from weather import views as weatherApiViews
 
-from userLocation import views
+router = routers.DefaultRouter()
+router.register(r'users', restApiViews.UserViewSet)
+router.register(r'groups', restApiViews.GroupViewSet)
+router.register(r'ElectoralDistricts', weatherApiViews.ElectoralDistrictsViewSet)
+router.register(r'Counties', weatherApiViews.CountiesViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("updatedb/", views.update_location, name="updatedb"),
+    path("updatedb/", userLocationViews.update_location, name="updatedb"),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
     #path('', include('posts.urls')),
+    path('', include(router.urls)),
     path('', include('pwa.urls')),
     path("api/v1/", include('location.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
