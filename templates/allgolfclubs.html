@@ -1,0 +1,19 @@
+<!-- templates/golfCourse.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+          {% load leaflet_tags %}
+    {% load static %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+    <title>Golf Clubs List</title>
+    <h1>Golf Clubs List</h1>
+    <ul>
+        {% for golf_club in golf_clubs %}
+            <li>
+                <a href="{% url 'golf_club_courses' golf_club.id %}">{{ golf_club.name }}</a>
+                - Location: ({{ golf_club.location_latitude }}, {{ golf_club.location_longitude }})
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- templates/gol_club_courses.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+          {% load leaflet_tags %}
+    {% load static %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+    <title>{{ golf_club.name }} Courses</title>
+
+    <h1>{{ golf_club.name }} Courses</h1>
+    <ul>
+        {% for course in courses %}
+            <li>{{ course.name }} - Calculated Distance: {{ course.calculated_distance }} meters, Estimated Hits: {{ course.estimated_hits }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

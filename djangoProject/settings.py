@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'restAPI',
     'weather',
+    'hikeTracking',
+    'golfCourses',
 ]
 
 MIDDLEWARE = [

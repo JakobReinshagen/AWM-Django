@@ -1,0 +1,21 @@
+<!-- templates/filtered_golf_clubs.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+          {% load leaflet_tags %}
+    {% load static %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+    <title>Add Golf Course</title>
+    <title>Filtered Golf Clubs</title>
+
+    <h1>Filtered Golf Clubs</h1>
+    <ul>
+        {% for club, distance, longest_course_distance in sorted_golf_clubs %}
+            <li>
+                {{ club.name }} - Distance: {{ distance }} km
+                {% if longest_course_distance is not None %} - Longest Course: {{ longest_course_distance }} meters{% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!-- templates/trail_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load leaflet_tags %}
+    {% load static %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+    <script src="{% static 'js/trail_tracking.js' %}"></script>
+    <h2>Trail Details</h2>
+    <p>Name: {{ trail.name }}</p>
+    <p>Started at: {{ trail.started_at }}</p>
+    <p>Ended at: {{ trail.ended_at }}</p>
+
+    <div id="map" style="height: 400px;"></div>
+
+    {% if trail.ended_at %}
+        <p>Trail is finalized. <a href="{% url 'start_record' %}">Start a new trail</a></p>
+    {% else %}
+        <p>Recording in progress</p>
+        <a id="pause-link" href="{% url 'pause_record' trail_id=trail.id %}">Pause</a>
+        <a id="stop-link" href="{% url 'stop_record' trail_id=trail.id %}">Stop</a>
+    {% endif %}
+
+    <script>
+        // Load Leaflet map
+        var map = L.map('map').setView([0, 0], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Display trail path on the map
+        var trailPath = L.geoJSON({{ trail.path.geojson|safe }});
+        trailPath.addTo(map);
+    </script>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- templates/golfCourse.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+          {% load leaflet_tags %}
+    {% load static %}
+    {% leaflet_css %}
+    {% leaflet_js %}
+    <title>Add Golf Course</title>
+
+    <h1>Add Golf Course</h1>
+    <form method="post" action="{% url 'add_golf_course' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Golf Course</button>
+    </form>
+{% endblock %}
