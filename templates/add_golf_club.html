@@ -7,37 +7,7 @@
     {% leaflet_css %}
     {% leaflet_js %}
       <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Function to handle form submission
-      function submitForm() {
-          var value1 = document.getElementById('name').value;
-          var HOST = location.protocol + "//" + location.host;
 
-          $.ajax({
-                type: "POST",
-                headers: {
-                'X-CSRFToken': "{{ csrf_token }}"
-                },
-            url: HOST + "/golfCourse/addgolfclub/",
-            data: {
-                name: value1,
-                location_latitude: coordinateLat,
-                location_longitude: coordinateLong
-            }
-            }).done(function (data, status, xhr) {
-            console.log(data["message"])
-            var originalMsg = $(".toast-body").html();
-            $(".toast-body").html(originalMsg + "<br/>Updated database<br/>" + data["message"]);
-            }).fail(function (xhr, status, error) {
-            console.log(error);
-            var originalMsg = $(".toast-body").html();
-            $(".toast-body").html(originalMsg + "<br/>" + error);
-            }).always(function () {
-            console.log("find_loc_ed finished");
-            $(".toast").toast('show');
-            });
-      }
-    });
     document.addEventListener('DOMContentLoaded', function () {
             var HOST = location.protocol + "//" + location.host;
             var target = HOST + "/golfCourse/addgolfclub/";

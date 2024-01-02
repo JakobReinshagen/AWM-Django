@@ -41,6 +41,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('trail_tracking/', include('hikeTracking.urls')),
     path('golfCourse/', include('golfCourses.urls')),
-    path('golfCourse/addgolfclub/', golfCourseViews.add_golf_club, name ="addgolfclub")
+    path('golfCourse/addgolfclub/', golfCourseViews.add_golf_club, name ="addgolfclub"),
+    path('golfCourse/add_golf_course/', golfCourseViews.add_golf_courseData, name ="add_golf_course")
 ]
 urlpatterns += staticfiles_urlpatterns()

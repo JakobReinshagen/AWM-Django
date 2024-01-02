@@ -1,4 +1,4 @@
-<!-- templates/gol_club_courses.html -->
+<!-- templates/golf_club_courses.html -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     <div id="mapid" style="height: 400px;"></div>
     <script>
         function drawLine(marray){
-            var polyline = L.polyline(marray, {color: 'red'}).addTo(mymap)
+            L.polyline(marray, {color: 'red'}).addTo(mymap)
         }
         var mymap = L.map('mapid').setView([{{ golf_club.location_latitude }}, {{ golf_club.location_longitude }}], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -24,19 +24,23 @@
         var markerarray = []
 
         {% for course in courses %}
-            {% for point in course.points %}
-                var pointArray = point.split(';');
-                var latitude = parseFloat(pointArray[0]);
-                var longitude = parseFloat(pointArray[1]);
+                var latitude1 = parseFloat({{ course.point1lat }});
+                var longitude1 = parseFloat({{ course.point1long }});
+                 var latitude2 = parseFloat({{ course.point2lat }});
+                var longitude2 = parseFloat({{ course.point2long }});
+                 var latitude3 = parseFloat({{ course.point3lat }});
+                var longitude3 = parseFloat({{ course.point3long }});
 
-                var marker = L.marker([latitude, longitude]).addTo(mymap).bindPopup("name: {{ course.name }}<br>distance: {{ course.calculated_distance }}<br>estimated hits: {{ course.estimated_hits }}");
-                markerarray.push([latitude, longitude]);
+                L.marker([latitude1, longitude1]).addTo(mymap).bindPopup("name: {{ course.name }}<br>distance: {{ course.calculated_distance }}<br>estimated hits: {{ course.estimated_hits }}");
+                markerarray.push([latitude1, longitude1]);
+                L.marker([latitude2, longitude2]).addTo(mymap).bindPopup("name: {{ course.name }}<br>distance: {{ course.calculated_distance }}<br>estimated hits: {{ course.estimated_hits }}");
+                markerarray.push([latitude2, longitude2]);
+                L.marker([latitude3, longitude3]).addTo(mymap).bindPopup("name: {{ course.name }}<br>distance: {{ course.calculated_distance }}<br>estimated hits: {{ course.estimated_hits }}");
+                markerarray.push([latitude3, longitude3]);
 
-            {% endfor %}
-            <li>{{ course.name }} - Calculated Distance: {{ course.calculated_distance }} meters, Estimated Hits: {{ course.estimated_hits }}</li>
             drawLine(markerarray);
             markerarray = [];
         {% endfor %}
     </script>
-    <a href="/golfCourse/add-golf-course/" class="btn btn-primary">Create new golf course</a>
+    <a href="/golfCourse/add-golf-course/{{ golf_club.id }}/" class="btn btn-primary">Create new golf course</a>
 {% endblock %}

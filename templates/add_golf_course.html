@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-          {% load leaflet_tags %}
+    {% load leaflet_tags %}
     {% load static %}
     {% leaflet_css %}
     {% leaflet_js %}
@@ -11,30 +11,69 @@
       <div class="container mt-5">
           <div id="mapid" style="height: 400px;"></div>
                   <script>
-                var mymap = L.map('mapid').setView([51.505, -0.09], 2);
+                var mymap = L.map('mapid').setView([{{ golf_club.location_latitude }}, {{ golf_club.location_longitude }}], 13);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                     maxZoom: 18,
                 }).addTo(mymap);
 
-                var coordinates;
+                var markerarray = [];
+                var index = 0;
                 mymap.on('click', function (e){
                 var marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
-                marker.addTo(layerGroup);
-                coordinates = [marker.getLatLng().lat, marker.getLatLng().lng];
-                })
+                markerarray.push([marker.getLatLng().lat, marker.getLatLng().lng]);
+                L.polyline(markerarray, {color: 'red'}).addTo(mymap);
+
+
+                    if (index === 0) {
+                        document.getElementById('point1lat').value = marker.getLatLng().lat;
+                        document.getElementById('point1long').value = marker.getLatLng().lng;
+                    } else if (index === 1) {
+                        document.getElementById('point2lat').value = marker.getLatLng().lat;
+                        document.getElementById('point2long').value = marker.getLatLng().lng;
+                    } else {
+                        document.getElementById('point3lat').value = marker.getLatLng().lat;
+                        document.getElementById('point3long').value = marker.getLatLng().lng;
+                    }
+                    index++;
+
+                });
+                    document.addEventListener('DOMContentLoaded', function () {
+                    var HOST = location.protocol + "//" + location.host;
+                    var target = HOST + "/golfCourse/add_golf_course/";
+                    document.getElementById('myForm').action = target;
+                });
             </script>
 
 
-        <form method="post" action="{% url 'submit_data' %}">
+        <form method="post" id="myForm" action="">
           {% csrf_token %}
 
           <div class="form-group">
-            <label for="dataField">Enter Data:</label>
-            <input type="text" class="form-control" id="dataField" name="data_field" required>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="distance">Distance:</label>
+                <input type="text" class="form-control" id="distance" name="distance" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hits">Estimated Hits:</label>
+                <input type="text" class="form-control" id="hits" name="estimated_hits" required>
+            </div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Save course</button>
+            <input type="hidden" class="form-control" id="point1lat" name="point1lat" required>
+            <input type="hidden" class="form-control" id="point1long" name="point1long" required>
+            <input type="hidden" class="form-control" id="point2lat" name="point2lat" >
+            <input type="hidden" class="form-control" id="point2long" name="point2long" >
+            <input type="hidden" class="form-control" id="point3lat" name="point3lat" >
+            <input type="hidden" class="form-control" id="point3long" name="point3long" >
+            <input type="hidden" class="form-control" id="club_id" name="club_id" value={{ golf_club.id }} >
         </form>
       </div>
 {% endblock %}
