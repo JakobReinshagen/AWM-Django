@@ -11,23 +11,6 @@ def golf_clubs_list(request):
     golf_clubs = GolfClub.objects.all()
     return render(request, 'allgolfclubs.html', {'golf_clubs': golf_clubs})
 
-def add_golf_club(request):
-    if request.method == 'POST':
-        form = GolfClubForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('golf_clubs_list')  # Redirect to the list of golf clubs after adding
-    else:
-        form = GolfClubForm()
-
-    return render(request, 'add_golf_club.html', {'form': form})
-
-
-def golf_club_courses(request, golf_club_id):
-    golf_club = get_object_or_404(GolfClub, pk=golf_club_id)
-    courses = GolfCourse.objects.filter(golf_club=golf_club)
-    return render(request, 'golf_club_courses.html', {'golf_club': golf_club, 'courses': courses})
-
 
 def add_golf_course(request):
     if request.method == 'POST':
@@ -39,4 +22,35 @@ def add_golf_course(request):
         form = GolfCourseForm()
 
     return render(request, 'add_golf_course.html', {'form': form})
+
+
+def golf_club_courses(request, golf_club_id):
+    golf_club = get_object_or_404(GolfClub, pk=golf_club_id)
+    courses = GolfCourse.objects.filter(golf_club=golf_club)
+    return render(request, 'golf_club_courses.html', {'golf_club': golf_club, 'courses': courses})
+
+
+def add_golf_club(request):
+    print("received data")
+    try:
+        if request.method == 'POST':
+            golfclub = GolfClub(name=request.POST["name"], location_latitude=request.POST["location_latitude"], location_longitude=request.POST["location_longitude"])
+            golfclub.save()
+            return redirect('golf_clubs_list')  # Redirect to the list of golf clubs after adding
+    except Exception as e:
+        raise e
+
+
+
+def add_golf_club(request):
+    if request.method == 'POST':
+        form = GolfClubForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('golf_clubs_list')  # Redirect to the list of golf clubs after adding
+    else:
+        form = GolfClubForm()
+
+    return render(request, 'add_golf_club.html', {'form': form})
+
 

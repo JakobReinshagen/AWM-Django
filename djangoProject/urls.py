@@ -22,6 +22,7 @@ from restAPI import views as restApiViews
 from weather import views as weatherApiViews
 from hikeTracking import views as hikeViews
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from golfCourses import views as golfCourseViews
 
 router = routers.DefaultRouter()
 router.register(r'users', restApiViews.UserViewSet)
@@ -34,12 +35,12 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("updatedb/", userLocationViews.update_location, name="updatedb"),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
-    #path('', include('posts.urls')),
     path('', include(router.urls)),
     path('', include('pwa.urls')),
     path("api/v1/", include('location.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('trail_tracking/', include('hikeTracking.urls')),
     path('golfCourse/', include('golfCourses.urls')),
+    path('golfCourse/addgolfclub/', golfCourseViews.add_golf_club, name ="addgolfclub")
 ]
 urlpatterns += staticfiles_urlpatterns()

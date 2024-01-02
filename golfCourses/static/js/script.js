@@ -11,7 +11,6 @@ var layerGroup = L.layerGroup().addTo(mymap);
 var markerArray = [];
 
 mymap.on('click', function (e){
-    var poplocation = e.latlng;
     var marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
     marker.addTo(layerGroup);
     var coordinates = [marker.getLatLng().lat, marker.getLatLng().lng];

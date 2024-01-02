@@ -17,5 +17,5 @@ def update_location(request):
         user_profle.save()
         return JsonResponse({"message": f"Set location to {point.wkt}."}, status=200)
     except Exception as e:
-        raise e;
+        raise e
         #r

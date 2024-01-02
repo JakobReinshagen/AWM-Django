@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, golf_clubs_list, add_golf_club, golf_club_courses, add_golf_course
+from .views import index, golf_clubs_list, add_golf_club, add_golf_course, add_golf_club, golf_club_courses
 
 urlpatterns = [
     path('', index, name='index'),

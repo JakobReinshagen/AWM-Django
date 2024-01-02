@@ -35,8 +35,17 @@
 
                 var marker = L.marker([{{golf_club.location_latitude}}, {{golf_club.location_longitude}}]).addTo(mymap);
                 marker.on('click', function () {
-                    window.location.href = '/golfCourse/golf_club_courses/' + {{golf_club.id}} + '/';
+                    window.location.href = '/golfCourse/golf-club-courses/' + {{golf_club.id}} + '/';
                 });
             </script>
         {% endfor %}
+    <a href="/golfCourse/add-golf-club/" class="btn btn-primary">Create new Club</a>
+    <ul>
+        {% for golf_club in golf_clubs %}
+            <li>
+                <a href="{% url 'golf_club_courses' golf_club.id %}">{{ golf_club.name }}</a>
+                - Location: ({{ golf_club.location_latitude }}, {{ golf_club.location_longitude }})
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
